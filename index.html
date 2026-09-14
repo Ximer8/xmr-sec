@@ -93,10 +93,11 @@
 
         /* CARDS GRID */
         .cards-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            display: flex; flex-wrap: wrap; justify-content: center;
             gap: 24px; margin-bottom: 60px;
         }
         .card {
+            flex: 1 1 300px; max-width: 340px;
             background: var(--bg-card); border: 1px solid var(--border);
             border-radius: 12px; padding: 32px; transition: all 0.2s;
         }
@@ -378,15 +379,25 @@
         <div class="about-block">
             <h2 data-i18n="about.title">Why Me?</h2>
             <p data-i18n="about.p1">I'm a full-time infrastructure engineer based in Ukraine. Having built solid skills managing networks, hardening servers, and automating infrastructure — I now have the bandwidth to help small and medium businesses that need professional-grade solutions without enterprise-level pricing.</p>
-            <p data-i18n="about.p2">No upsells. No fluff. Just solid engineering work, documented and delivered.</p>
+            <p data-i18n="about.p2">Just solid engineering work, documented and delivered.</p>
             <div class="tech-tags">
-                <span>Linux</span><span>MikroTik</span><span>nftables</span>
-                <span>WireGuard</span><span>Docker</span><span>Podman</span>
-                <span>Nginx</span><span>Prometheus</span><span>Grafana</span>
-                <span>Grafana Alloy</span><span>Zabbix</span><span>Netdata</span>
-                <span>Uptime Kuma</span><span>Loki</span><span>Nomad</span>
-                <span>Ansible</span><span>Bash</span><span>Python</span>
-                <span>GitLab CI/CD</span><span>PostgreSQL</span>
+                <span>Ubuntu</span><span>Debian</span><span>Oracle Linux</span>
+                <span>FreeBSD</span><span>systemd</span><span>SELinux</span><span>AppArmor</span>
+                <span>MikroTik</span><span>Cisco IOS</span><span>nftables</span><span>iptables</span>
+                <span>UFW</span><span>firewalld</span><span>WireGuard</span><span>OpenVPN</span>
+                <span>IPsec</span><span>HAProxy</span><span>Nginx</span><span>Traefik</span><span>Caddy</span>
+                <span>Prometheus</span><span>Grafana</span><span>Grafana Alloy</span><span>Zabbix</span>
+                <span>Netdata</span><span>Uptime Kuma</span><span>Loki</span><span>ELK Stack</span>
+                <span>mktxp</span>
+                <span>Docker</span><span>Podman</span><span>Docker Compose</span><span>Nomad</span>
+                <span>Kubernetes</span><span>Proxmox</span><span>VMware ESXi</span>
+                <span>GitLab CI/CD</span><span>GitHub Actions</span><span>Jenkins</span>
+                <span>Ansible</span><span>Terraform</span><span>Chef</span>
+                <span>Bash</span><span>Python</span><span>Go</span><span>PowerShell</span>
+                <span>PostgreSQL</span><span>MySQL / MariaDB</span><span>Redis</span>
+                <span>MongoDB</span><span>Oracle DB</span><span>SQLite</span>
+                <span>AWS</span><span>Google Cloud</span><span>Azure</span><span>Oracle Cloud</span>
+                <span>DigitalOcean</span><span>Fail2ban</span><span>Let's Encrypt</span>
             </div>
         </div>
 
@@ -783,7 +794,7 @@
             'cards.automation.li5': 'Configuration management',
             'about.title': 'Why Me?',
             'about.p1': "I'm a full-time infrastructure engineer based in Ukraine. Having built solid skills managing networks, hardening servers, and automating infrastructure — I now have the bandwidth to help small and medium businesses that need professional-grade solutions without enterprise-level pricing.",
-            'about.p2': 'No upsells. No fluff. Just solid engineering work, documented and delivered.',
+            'about.p2': 'Just solid engineering work, documented and delivered.',
             'cta.title': "Let's talk about your infrastructure",
             'cta.subtitle': "Tell me what you need — I'll give you an honest assessment and a clear quote.",
             'cta.note': 'Choose the channel that is most convenient for you. Messengers are checked faster; email is the fallback.',
@@ -864,7 +875,7 @@
             'cards.automation.li5': 'Управління конфігурацією',
             'about.title': 'Чому я?',
             'about.p1': 'Я — штатний інфраструктурний інженер з України. Напрацювавши міцні навички в управлінні мережами, захисті серверів та автоматизації — тепер маю час і ресурс допомогти малому та середньому бізнесу, якому потрібні професійні рішення без корпоративних цін.',
-            'about.p2': 'Без нав\'язування. Без води. Просто якісна інженерна робота, задокументована та здана.',
+            'about.p2': 'Проста якісна інженерна робота, задокументована та здана.',
             'cta.title': 'Поговоримо про вашу інфраструктуру',
             'cta.subtitle': 'Розкажіть, що вам потрібно — я дам чесну оцінку та прозору вартість.',
             'cta.note': 'Оберіть зручний канал. Месенджери перевіряються швидше, пошта є резервним варіантом.',
