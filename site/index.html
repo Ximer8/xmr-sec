@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ximer — Network & Server Engineer | Hardening, Monitoring, MikroTik</title>
+    <meta name="description" content="Network engineering, server hardening, firewall configuration for small and medium businesses. Hands-on skills, fair pricing.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://xmr-sec.example.com/">
+    <link rel="alternate" hreflang="en" href="https://xmr-sec.example.com/">
+    <link rel="alternate" hreflang="uk" href="https://xmr-sec.example.com/ua/">
+    <link rel="alternate" hreflang="x-default" href="https://xmr-sec.example.com/">
+
+    <!-- Open Graph / social preview cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ximer — Network & Server Engineer">
+    <meta property="og:description" content="Network engineering, server hardening and monitoring for small and medium businesses.">
+    <meta property="og:url" content="https://xmr-sec.example.com/">
+    <meta property="og:image" content="https://xmr-sec.example.com/og-cover.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ximer — Network & Server Engineer">
+    <meta name="twitter:description" content="Network engineering, server hardening and monitoring for small and medium businesses.">
+    <meta name="twitter:image" content="https://xmr-sec.example.com/og-cover.png">
+
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Ximer",
+        "description": "Network engineering, server hardening and monitoring for small and medium businesses.",
+        "url": "https://xmr-sec.example.com/",
+        "areaServed": "Worldwide",
+        "knowsAbout": ["Linux", "MikroTik", "Server Hardening", "Prometheus", "Grafana", "Docker", "Podman", "Network Engineering"]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --bg-card: #12121a;
+            --bg-highlight: #1a1a2e;
+            --text: #e0e0e0;
+            --text-muted: #8888aa;
+            --accent: #00d4aa;
+            --accent-hover: #00ffcc;
+            --border: #2a2a3e;
+            --gradient: linear-gradient(135deg, #00d4aa 0%, #0088ff 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        nav .logo { font-weight: 700; font-size: 1.2rem; color: var(--accent); text-decoration: none; }
+
+        /* MODE TOGGLE */
+        .mode-toggle {
+            display: flex; gap: 4px;
+            background: var(--bg-highlight); border-radius: 8px; padding: 3px;
+        }
+        .mode-toggle button {
+            padding: 8px 20px; border: none; border-radius: 6px;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer;
+            background: transparent; color: var(--text-muted);
+            transition: all 0.25s;
+        }
+        .mode-toggle button.active {
+            background: var(--accent); color: #000;
+        }
+        .mode-toggle button:hover:not(.active) { color: var(--text); }
+
+        /* LANG TOGGLE */
+        .nav-controls { display: flex; align-items: center; gap: 12px; }
+        .lang-toggle {
+            display: flex; gap: 2px;
+            background: var(--bg-highlight); border-radius: 6px; padding: 3px;
+        }
+        .lang-toggle a {
+            padding: 6px 12px; border: none; border-radius: 4px;
+            font-size: 0.8rem; font-weight: 700; cursor: pointer;
+            background: transparent; color: var(--text-muted); text-decoration: none;
+            transition: all 0.25s;
+        }
+        .lang-toggle a.active {
+            background: var(--accent); color: #000;
+        }
+        .lang-toggle a:hover:not(.active) { color: var(--text); }
+
+        /* STANDARD VIEW */
+        .view-standard { padding-top: 80px; min-height: 100vh; }
+
+        .hero {
+            text-align: center; padding: 80px 0 40px;
+        }
+        .hero-badge {
+            display: inline-block; background: rgba(0, 212, 170, 0.1);
+            border: 1px solid rgba(0, 212, 170, 0.3); color: var(--accent);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; margin-bottom: 24px;
+        }
+        .hero-badge .status-dot { font-size: 0.55rem; margin-right: 6px; color: #2ecc71; }
+        .hero h1 { font-size: 2.6rem; font-weight: 800; line-height: 1.15; margin-bottom: 20px; }
+        .hero h1 span { background: var(--gradient); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p.subtitle {
+            font-size: 1.15rem; color: var(--text-muted); max-width: 620px;
+            margin: 0 auto 48px;
+        }
+
+        /* CARDS GRID */
+        .cards-grid {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 24px; margin-bottom: 60px;
+        }
+        .card {
+            flex: 1 1 300px; max-width: 340px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 32px; transition: all 0.2s;
+        }
+        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .card .icon { font-size: 2rem; margin-bottom: 14px; color: var(--accent); }
+        .card h3 { font-size: 1.15rem; margin-bottom: 8px; }
+        .card p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 14px; }
+        .card ul { list-style: none; }
+        .card ul li { padding: 3px 0; font-size: 0.85rem; color: var(--text-muted); }
+        .card ul li::before { content: "✓ "; color: var(--accent); font-weight: 700; }
+
+        /* ABOUT BLOCK */
+        .about-block {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 40px; max-width: 700px;
+            margin: 0 auto 48px; text-align: center;
+        }
+        .about-block h2 { font-size: 1.4rem; margin-bottom: 12px; }
+        .about-block p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 12px; }
+        .tech-tags {
+            display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 20px;
+        }
+        .tech-tags span {
+            background: var(--bg-highlight); border: 1px solid var(--border);
+            padding: 5px 12px; border-radius: 6px; font-size: 0.8rem;
+        }
+
+        /* CTA */
+        .cta-block { text-align: center; padding: 40px 0 80px; }
+        .cta-block h2 { font-size: 1.8rem; margin-bottom: 12px; }
+        .cta-block p { color: var(--text-muted); margin-bottom: 16px; }
+        .contact-note { color: var(--text-muted); font-size: 0.85rem; margin: 0 0 20px; }
+        .contact-options {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+        }
+        .contact-options .btn { min-width: 120px; }
+        .contact-options .btn-outline { margin-left: 0; }
+        .contact-options .is-disabled {
+            cursor: not-allowed; opacity: 0.45; pointer-events: none;
+        }
+
+        .btn {
+            display: inline-block; padding: 14px 28px; border-radius: 8px;
+            font-weight: 700; text-decoration: none; font-size: 1rem;
+            transition: all 0.2s; cursor: pointer; border: none;
+        }
+        .btn-primary { background: var(--accent); color: #000; }
+        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+        .btn-outline {
+            background: transparent; border: 2px solid var(--accent);
+            color: var(--accent); margin-left: 12px;
+        }
+        .btn-outline:hover { background: rgba(0, 212, 170, 0.1); }
+
+        /* ========== ADVANCED VIEW ========== */
+        .view-advanced {
+            display: none;
+            padding-top: 80px; min-height: 100vh;
+        }
+
+        .advanced-header {
+            text-align: center; padding: 40px 0 32px;
+        }
+        .advanced-header h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
+        .advanced-header p { color: var(--text-muted); font-size: 1rem; }
+
+        .advanced-layout {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+            padding-bottom: 60px;
+        }
+
+        /* Left column — selected services summary */
+        .selected-panel {
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 12px; padding: 28px; position: sticky; top: 80px;
+            align-self: start;
+        }
+        .selected-panel h3 { font-size: 1.1rem; margin-bottom: 16px; color: var(--accent); }
+        .selected-list { min-height: 120px; }
+        .selected-list .empty-state {
+            color: var(--text-muted); font-size: 0.9rem;
+            text-align: center; padding: 40px 0;
+        }
+        .selected-list .selected-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 0; border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+        .selected-list .selected-item button {
+            background: none; border: none; color: #ff6b6b;
+            cursor: pointer; font-size: 1rem; padding: 2px 6px;
+        }
+        .selected-panel .cta-area { margin-top: 24px; text-align: center; }
+        .selected-count {
+            font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;
+        }
+
+        /* Right column — skills/services list */
+        .skills-panel { display: flex; flex-direction: column; gap: 12px; }
+
+        .skill-category h3 {
+            font-size: 1rem; color: var(--accent); margin-bottom: 12px;
+            padding-bottom: 6px; border-bottom: 1px solid var(--border);
+        }
+
+        .skill-item {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: 10px; padding: 16px 20px; cursor: pointer;
+            transition: all 0.2s; user-select: none;
+        }
+        .skill-item:hover { border-color: rgba(0, 212, 170, 0.4); }
+        .skill-item.checked { border-color: var(--accent); background: rgba(0, 212, 170, 0.05); }
+
+        .skill-item input[type="checkbox"] { display: none; }
+
+        .skill-check {
+            width: 22px; height: 22px; border: 2px solid var(--border);
+            border-radius: 5px; flex-shrink: 0; display: flex;
+            align-items: center; justify-content: center;
+            transition: all 0.2s; font-size: 0.85rem; color: transparent;
+        }
+        .skill-item.checked .skill-check {
+            background: var(--accent); border-color: var(--accent); color: #000;
+        }
+
+        .skill-info { flex: 1; }
+        .skill-info .name { font-weight: 600; font-size: 0.95rem; }
+        .skill-info .desc { color: var(--text-muted); font-size: 0.82rem; margin-top: 2px; }
+
+        /* FOOTER */
+        footer {
+            padding: 32px 0; border-top: 1px solid var(--border);
+            text-align: center; color: var(--text-muted); font-size: 0.85rem;
+        }
+        footer a { color: var(--accent); text-decoration: none; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.9rem; }
+            .advanced-layout { grid-template-columns: 1fr; }
+            .selected-panel { position: static; order: 2; }
+            .skills-panel { order: 1; }
+            .mode-toggle button { padding: 6px 14px; font-size: 0.8rem; }
+            .nav-controls { gap: 8px; }
+            .lang-toggle a { padding: 5px 8px; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="container">
+        <a class="logo"><i class="bi bi-lightning-charge-fill"></i> XIMER</a>
+        <div class="nav-controls">
+            <div class="mode-toggle">
+                <button class="active" onclick="switchMode('standard')" data-i18n="nav.standard">Standard</button>
+                <button onclick="switchMode('advanced')" data-i18n="nav.advanced">Advanced</button>
+            </div>
+            <div class="lang-toggle">
+                <a class="active" href="/">EN</a>
+                <a href="/ua/">UA</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- ==================== STANDARD VIEW ==================== -->
+<div class="view-standard" id="viewStandard">
+
+    <div class="container">
+
+        <!-- HERO -->
+        <div class="hero">
+            <div class="hero-badge"><i class="bi bi-circle-fill status-dot"></i><span data-i18n="hero.badge">Available for remote work</span></div>
+            <h1 data-i18n-html="hero.title">Networking & Server Hardening<br>for <span>Your Business</span></h1>
+            <p class="subtitle" data-i18n="hero.subtitle">I'm a hands-on network and infrastructure engineer. With spare capacity in my schedule, I decided to offer my well-developed skills to small and medium businesses — at fair rates, without corporate overhead.</p>
+        </div>
+
+        <!-- SERVICE CARDS -->
+        <div class="cards-grid">
+
+            <div class="card">
+                <div class="icon"><i class="bi bi-shield-lock-fill"></i></div>
+                <h3 data-i18n="cards.hardening.title">Server Hardening</h3>
+                <p data-i18n="cards.hardening.desc">Lock down your servers against common and advanced threats.</p>
+                <ul>
+                    <li data-i18n="cards.hardening.li1">SSH hardening & key-only access</li>
+                    <li data-i18n="cards.hardening.li2">Firewall configuration (nftables / UFW)</li>
+                    <li data-i18n="cards.hardening.li3">Fail2ban & intrusion prevention</li>
+                    <li data-i18n="cards.hardening.li4">Kernel security tuning</li>
+                    <li data-i18n="cards.hardening.li5">Automated security updates</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="bi bi-hdd-network-fill"></i></div>
+                <h3 data-i18n="cards.network.title">Network Engineering</h3>
+                <p data-i18n="cards.network.desc">Design, configure, and troubleshoot networks of any scale.</p>
+                <ul>
+                    <li data-i18n="cards.network.li1">MikroTik / RouterOS configuration</li>
+                    <li data-i18n="cards.network.li2">VLAN segmentation & routing</li>
+                    <li data-i18n="cards.network.li3">VPN setup (WireGuard / OpenVPN / SSTP)</li>
+                    <li data-i18n="cards.network.li4">Firewall rules & NAT policies</li>
+                    <li data-i18n="cards.network.li5">Network monitoring & diagnostics</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="bi bi-shield-fill-check"></i></div>
+                <h3 data-i18n="cards.firewall.title">Firewall & Access Control</h3>
+                <p data-i18n="cards.firewall.desc">Precise traffic control — only what's needed gets through.</p>
+                <ul>
+                    <li data-i18n="cards.firewall.li1">nftables / iptables rulesets</li>
+                    <li data-i18n="cards.firewall.li2">Zone-based firewall design</li>
+                    <li data-i18n="cards.firewall.li3">Port knocking & rate limiting</li>
+                    <li data-i18n="cards.firewall.li4">Application-layer filtering</li>
+                    <li data-i18n="cards.firewall.li5">Audit & documentation</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="bi bi-graph-up-arrow"></i></div>
+                <h3 data-i18n="cards.monitoring.title">Monitoring & Observability</h3>
+                <p data-i18n="cards.monitoring.desc">Full observability stack — metrics, logs, uptime, real-time dashboards.</p>
+                <ul>
+                    <li data-i18n="cards.monitoring.li1">Prometheus + Grafana + Grafana Alloy</li>
+                    <li data-i18n="cards.monitoring.li2">Zabbix / Netdata real-time monitoring</li>
+                    <li data-i18n="cards.monitoring.li3">Loki log aggregation + Promtail</li>
+                    <li data-i18n="cards.monitoring.li4">Uptime Kuma status pages</li>
+                    <li data-i18n="cards.monitoring.li5">cAdvisor container metrics</li>
+                    <li data-i18n="cards.monitoring.li6">Telegram / Email / Slack alerts</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="bi bi-box-seam-fill"></i></div>
+                <h3 data-i18n="cards.containers.title">Containers & Orchestration</h3>
+                <p data-i18n="cards.containers.desc">Run workloads in containers — Docker, Podman, or Nomad orchestration.</p>
+                <ul>
+                    <li data-i18n="cards.containers.li1">Docker & Docker Compose</li>
+                    <li data-i18n="cards.containers.li2">Podman rootless containers</li>
+                    <li data-i18n="cards.containers.li3">HashiCorp Nomad scheduling</li>
+                    <li data-i18n="cards.containers.li4">Container registry setup</li>
+                    <li data-i18n="cards.containers.li5">Image security scanning</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="bi bi-terminal-fill"></i></div>
+                <h3 data-i18n="cards.linux.title">Linux Administration</h3>
+                <p data-i18n="cards.linux.desc">Day-to-day server management and optimization.</p>
+                <ul>
+                    <li data-i18n="cards.linux.li1">Server setup & provisioning</li>
+                    <li data-i18n="cards.linux.li2">Performance tuning</li>
+                    <li data-i18n="cards.linux.li3">Backup & disaster recovery</li>
+                    <li data-i18n="cards.linux.li4">Service management (systemd)</li>
+                    <li data-i18n="cards.linux.li5">CI/CD pipeline setup</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="icon"><i class="bi bi-gear-fill"></i></div>
+                <h3 data-i18n="cards.automation.title">Infrastructure Automation</h3>
+                <p data-i18n="cards.automation.desc">Repeatable, reliable deployments with modern tooling.</p>
+                <ul>
+                    <li data-i18n="cards.automation.li1">Ansible playbooks & roles</li>
+                    <li data-i18n="cards.automation.li2">Bash / Python scripting</li>
+                    <li data-i18n="cards.automation.li3">GitLab CI/CD pipelines</li>
+                    <li data-i18n="cards.automation.li4">Nomad job specifications</li>
+                    <li data-i18n="cards.automation.li5">Configuration management</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <!-- ABOUT -->
+        <div class="about-block">
+            <h2 data-i18n="about.title">Why Me?</h2>
+            <p data-i18n="about.p1">I'm a full-time infrastructure engineer based in Ukraine. Having built solid skills managing networks, hardening servers, and automating infrastructure — I now have the bandwidth to help small and medium businesses that need professional-grade solutions without enterprise-level pricing.</p>
+            <p data-i18n="about.p2">Just solid engineering work, documented and delivered.</p>
+            <div class="tech-tags">
+                <span>Ubuntu</span><span>Debian</span><span>Oracle Linux</span>
+                <span>FreeBSD</span><span>systemd</span><span>SELinux</span><span>AppArmor</span>
+                <span>MikroTik</span><span>Cisco IOS</span><span>nftables</span><span>iptables</span>
+                <span>UFW</span><span>firewalld</span><span>WireGuard</span><span>OpenVPN</span>
+                <span>IPsec</span><span>HAProxy</span><span>Nginx</span><span>Traefik</span><span>Caddy</span>
+                <span>Prometheus</span><span>Grafana</span><span>Grafana Alloy</span><span>Zabbix</span>
+                <span>Netdata</span><span>Uptime Kuma</span><span>Loki</span><span>ELK Stack</span>
+                <span>mktxp</span>
+                <span>Docker</span><span>Podman</span><span>Docker Compose</span><span>Nomad</span>
+                <span>Kubernetes</span><span>Proxmox</span><span>VMware ESXi</span>
+                <span>GitLab CI/CD</span><span>GitHub Actions</span><span>Jenkins</span>
+                <span>Ansible</span><span>Terraform</span><span>Chef</span>
+                <span>Bash</span><span>Python</span><span>Go</span><span>PowerShell</span>
+                <span>PostgreSQL</span><span>MySQL / MariaDB</span><span>Redis</span>
+                <span>MongoDB</span><span>Oracle DB</span><span>SQLite</span>
+                <span>AWS</span><span>Google Cloud</span><span>Azure</span><span>Oracle Cloud</span>
+                <span>DigitalOcean</span><span>Fail2ban</span><span>Let's Encrypt</span>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-block" id="contact">
+            <h2 data-i18n="cta.title">Let's talk about your infrastructure</h2>
+            <p data-i18n="cta.subtitle">Tell me what you need — I'll give you an honest assessment and a clear quote.</p>
+            <div class="contact-note" data-i18n="cta.note">Choose the channel that is most convenient for you. Messengers are checked faster; email is the fallback.</div>
+            <div class="contact-options">
+                <a class="btn btn-primary" data-contact="telegram" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a class="btn btn-outline" data-contact="signal" target="_blank" rel="noopener noreferrer">Signal</a>
+                <a class="btn btn-outline" data-contact="element" target="_blank" rel="noopener noreferrer">Element</a>
+                <a class="btn btn-outline" data-contact="email" data-i18n="cta.email">Email</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ==================== ADVANCED VIEW ==================== -->
+<div class="view-advanced" id="viewAdvanced">
+
+    <div class="container">
+
+        <div class="advanced-header">
+            <h2 data-i18n="adv.title">Build Your Service Package</h2>
+            <p data-i18n="adv.subtitle">Select the specific services you need — I'll prepare a tailored proposal.</p>
+        </div>
+
+        <div class="advanced-layout">
+
+            <!-- LEFT: Selected services summary -->
+            <div class="selected-panel">
+                <h3><i class="bi bi-clipboard2-check-fill"></i> <span data-i18n="adv.selection">Your Selection</span></h3>
+                <div class="selected-list" id="selectedList">
+                    <div class="empty-state" data-i18n="adv.empty">Select services from the right panel to build your custom package.</div>
+                </div>
+                <div class="cta-area">
+                    <div class="selected-count" id="selectedCount" data-i18n="adv.count0">0 services selected</div>
+                    <button id="copySelectionBtn" class="btn btn-primary" style="width:100%; text-align:center;" onclick="copySelection()" data-i18n="adv.copy">Copy Request</button>
+                    <div class="contact-note" style="margin-top:12px;" data-i18n="adv.contactNote">Copy the request, then choose where to send it.</div>
+                    <div class="contact-options">
+                        <a class="btn btn-outline" data-contact="telegram" data-selection-link="telegram" target="_blank" rel="noopener noreferrer">Telegram</a>
+                        <a class="btn btn-outline" data-contact="signal" target="_blank" rel="noopener noreferrer">Signal</a>
+                        <a class="btn btn-outline" data-contact="element" target="_blank" rel="noopener noreferrer">Element</a>
+                        <a class="btn btn-outline" data-contact="email" data-selection-link="email" data-i18n="cta.email">Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Skills/services list -->
+            <div class="skills-panel" id="skillsPanel">
+
+                <div class="skill-category">
+                    <h3><i class="bi bi-shield-lock-fill"></i> <span data-i18n="skills.cat.hardening">Server Hardening</span></h3>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="SSH Hardening">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">SSH Hardening</div>
+                            <div class="desc">Key-only auth, non-standard port, connection limits</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Firewall Setup (nftables/UFW)">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Firewall Setup (nftables / UFW)</div>
+                            <div class="desc">Inbound/outbound rules, default deny, logging</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Fail2ban & Intrusion Prevention">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Fail2ban & Intrusion Prevention</div>
+                            <div class="desc">Brute-force protection, custom jails, ban policies</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Kernel Security Tuning">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Kernel Security Tuning</div>
+                            <div class="desc">sysctl hardening, disable unused modules, ASLR</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Automated Security Updates">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Automated Security Updates</div>
+                            <div class="desc">Unattended upgrades, reboot policies, rollback</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="bi bi-hdd-network-fill"></i> <span data-i18n="skills.cat.network">Network Engineering</span></h3>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="MikroTik / RouterOS Configuration">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">MikroTik / RouterOS Configuration</div>
+                            <div class="desc">Full router setup, firewall, queues, scripting</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="VLAN Segmentation & Routing">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">VLAN Segmentation & Routing</div>
+                            <div class="desc">Network isolation, inter-VLAN routing, trunk ports</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="VPN Setup (WireGuard / OpenVPN)">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">VPN Setup (WireGuard / OpenVPN)</div>
+                            <div class="desc">Site-to-site, remote access, split tunneling</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="NAT & Port Forwarding">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">NAT & Port Forwarding</div>
+                            <div class="desc">SNAT/DNAT, masquerade, hairpin NAT</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Network Diagnostics & Troubleshooting">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Network Diagnostics & Troubleshooting</div>
+                            <div class="desc">Packet capture, latency analysis, connectivity issues</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="bi bi-graph-up-arrow"></i> <span data-i18n="skills.cat.monitoring">Monitoring & Observability</span></h3>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Prometheus + Grafana Stack">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Prometheus + Grafana Stack</div>
+                            <div class="desc">Full monitoring stack deployment and configuration</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Grafana Alloy (Collector)">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Grafana Alloy (Collector)</div>
+                            <div class="desc">Unified telemetry collector for metrics, logs, traces</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Zabbix Monitoring">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Zabbix Monitoring</div>
+                            <div class="desc">Enterprise monitoring, auto-discovery, templates</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Netdata Real-time">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Netdata Real-time</div>
+                            <div class="desc">Per-second metrics, zero-config, anomaly detection</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Uptime Kuma">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Uptime Kuma</div>
+                            <div class="desc">Status pages, HTTP/TCP/DNS monitoring, notifications</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Log Aggregation (Loki)">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Log Aggregation (Loki + Promtail)</div>
+                            <div class="desc">Centralized logs, search, retention policies</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="cAdvisor Container Metrics">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">cAdvisor Container Metrics</div>
+                            <div class="desc">Docker/Podman resource usage, performance data</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Custom Dashboards & Alerts">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Custom Dashboards & Alerts</div>
+                            <div class="desc">Tailored metrics, thresholds, Telegram/email/Slack alerts</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="bi bi-box-seam-fill"></i> <span data-i18n="skills.cat.containers">Containers & Orchestration</span></h3>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Docker / Compose Setup">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Docker / Compose Setup</div>
+                            <div class="desc">Containerization, multi-service stacks, volumes</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Podman Rootless Containers">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Podman Rootless Containers</div>
+                            <div class="desc">Daemonless, rootless, OCI-compliant containers</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="HashiCorp Nomad">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">HashiCorp Nomad</div>
+                            <div class="desc">Workload scheduling, job specs, cluster management</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Container Registry">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Container Registry</div>
+                            <div class="desc">Private registry, image management, security scanning</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h3><i class="bi bi-gear-fill"></i> <span data-i18n="skills.cat.automation">Automation & DevOps</span></h3>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Ansible Automation">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Ansible Automation</div>
+                            <div class="desc">Playbooks, roles, idempotent server configuration</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="GitLab CI/CD Pipelines">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">GitLab CI/CD Pipelines</div>
+                            <div class="desc">Build, test, deploy automation</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Bash / Python Scripting">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Bash / Python Scripting</div>
+                            <div class="desc">Custom automation scripts, cron jobs, integrations</div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" onclick="toggleSkill(this)">
+                        <input type="checkbox" value="Backup & Disaster Recovery">
+                        <div class="skill-check"><i class="bi bi-check-lg"></i></div>
+                        <div class="skill-info">
+                            <div class="name">Backup & Disaster Recovery</div>
+                            <div class="desc">Automated backups, integrity checks, recovery plans</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <p data-i18n="footer.copy">© 2026 Ximer. Network & Infrastructure Engineering.</p>
+        <p style="margin-top:8px;">
+            <a href="https://github.com/Ximer8">GitHub</a> ·
+            <a href="https://linkedin.com/in/ximer-x-4a21b2309">LinkedIn</a> ·
+            <a href="https://twitter.com/Ximer_pwn">Twitter</a> ·
+            <a href="https://youtube.com/@Ximer_UA">YouTube</a>
+        </p>
+    </div>
+</footer>
+
+<script>
+    // ===== TRANSLATIONS =====
+    let currentLang = 'en';
+
+    const CONTACTS = {
+        telegram: 'https://t.me/ximer_x',
+        signal: 'https://signal.me/#eu/Dc3HZS62guU978huKeaVMd2JD4ka2L1DRwomT79ChdR03jSpXHlGPp_ICgWyBexP',
+        element: 'https://matrix.to/#/@ximer-x:matrix.org',
+        email: 'ximer3578@gmail.com'
+    };
+
+    const i18n = {
+        en: {
+            'nav.standard': 'Standard',
+            'nav.advanced': 'Advanced',
+            'hero.badge': 'Available for remote work',
+            'hero.title': 'Networking & Server Hardening<br>for <span>Your Business</span>',
+            'hero.subtitle': "I'm a hands-on network and infrastructure engineer. With spare capacity in my schedule, I decided to offer my well-developed skills to small and medium businesses — at fair rates, without corporate overhead.",
+            'cards.hardening.title': 'Server Hardening',
+            'cards.hardening.desc': 'Lock down your servers against common and advanced threats.',
+            'cards.hardening.li1': 'SSH hardening & key-only access',
+            'cards.hardening.li2': 'Firewall configuration (nftables / UFW)',
+            'cards.hardening.li3': 'Fail2ban & intrusion prevention',
+            'cards.hardening.li4': 'Kernel security tuning',
+            'cards.hardening.li5': 'Automated security updates',
+            'cards.network.title': 'Network Engineering',
+            'cards.network.desc': 'Design, configure, and troubleshoot networks of any scale.',
+            'cards.network.li1': 'MikroTik / RouterOS configuration',
+            'cards.network.li2': 'VLAN segmentation & routing',
+            'cards.network.li3': 'VPN setup (WireGuard / OpenVPN / SSTP)',
+            'cards.network.li4': 'Firewall rules & NAT policies',
+            'cards.network.li5': 'Network monitoring & diagnostics',
+            'cards.firewall.title': 'Firewall & Access Control',
+            'cards.firewall.desc': 'Precise traffic control — only what\'s needed gets through.',
+            'cards.firewall.li1': 'nftables / iptables rulesets',
+            'cards.firewall.li2': 'Zone-based firewall design',
+            'cards.firewall.li3': 'Port knocking & rate limiting',
+            'cards.firewall.li4': 'Application-layer filtering',
+            'cards.firewall.li5': 'Audit & documentation',
+            'cards.monitoring.title': 'Monitoring & Observability',
+            'cards.monitoring.desc': 'Full observability stack \u2014 metrics, logs, uptime, real-time dashboards.',
+            'cards.monitoring.li1': 'Prometheus + Grafana + Grafana Alloy',
+            'cards.monitoring.li2': 'Zabbix / Netdata real-time monitoring',
+            'cards.monitoring.li3': 'Loki log aggregation + Promtail',
+            'cards.monitoring.li4': 'Uptime Kuma status pages',
+            'cards.monitoring.li5': 'cAdvisor container metrics',
+            'cards.monitoring.li6': 'Telegram / Email / Slack alerts',
+            'cards.containers.title': 'Containers & Orchestration',
+            'cards.containers.desc': 'Run workloads in containers \u2014 Docker, Podman, or Nomad orchestration.',
+            'cards.containers.li1': 'Docker & Docker Compose',
+            'cards.containers.li2': 'Podman rootless containers',
+            'cards.containers.li3': 'HashiCorp Nomad scheduling',
+            'cards.containers.li4': 'Container registry setup',
+            'cards.containers.li5': 'Image security scanning',
+            'cards.linux.title': 'Linux Administration',
+            'cards.linux.desc': 'Day-to-day server management and optimization.',
+            'cards.linux.li1': 'Server setup & provisioning',
+            'cards.linux.li2': 'Performance tuning',
+            'cards.linux.li3': 'Backup & disaster recovery',
+            'cards.linux.li4': 'Service management (systemd)',
+            'cards.linux.li5': 'CI/CD pipeline setup',
+            'cards.automation.title': 'Infrastructure Automation',
+            'cards.automation.desc': 'Repeatable, reliable deployments with modern tooling.',
+            'cards.automation.li1': 'Ansible playbooks & roles',
+            'cards.automation.li2': 'Bash / Python scripting',
+            'cards.automation.li3': 'GitLab CI/CD pipelines',
+            'cards.automation.li4': 'Nomad job specifications',
+            'cards.automation.li5': 'Configuration management',
+            'about.title': 'Why Me?',
+            'about.p1': "I'm a full-time infrastructure engineer based in Ukraine. Having built solid skills managing networks, hardening servers, and automating infrastructure — I now have the bandwidth to help small and medium businesses that need professional-grade solutions without enterprise-level pricing.",
+            'about.p2': 'Just solid engineering work, documented and delivered.',
+            'cta.title': "Let's talk about your infrastructure",
+            'cta.subtitle': "Tell me what you need — I'll give you an honest assessment and a clear quote.",
+            'cta.note': 'Choose the channel that is most convenient for you. Messengers are checked faster; email is the fallback.',
+            'cta.email': 'Email',
+            'adv.title': 'Build Your Service Package',
+            'adv.subtitle': "Select the specific services you need — I'll prepare a tailored proposal.",
+            'adv.selection': 'Your Selection',
+            'adv.empty': 'Select services from the right panel to build your custom package.',
+            'adv.count0': '0 services selected',
+            'adv.copy': 'Copy Request',
+            'adv.copied': 'Copied',
+            'adv.contactNote': 'Copy the request, then choose where to send it.',
+            'skills.cat.hardening': 'Server Hardening',
+            'skills.cat.network': 'Network Engineering',
+            'skills.cat.monitoring': 'Monitoring & Observability',
+            'skills.cat.containers': 'Containers & Orchestration',
+            'skills.cat.automation': 'Automation & DevOps',
+            'footer.copy': '© 2026 Ximer. Network & Infrastructure Engineering.',
+            // Dynamic strings
+            'selected.count': ' service(s) selected',
+            'selected.msg': "Hi! I'm interested in these services:\n\n"
+        },
+        ua: {
+            'nav.standard': 'Стандарт',
+            'nav.advanced': 'Розширений',
+            'hero.badge': 'Доступний для віддаленої роботи',
+            'hero.title': 'Мережі та захист серверів<br>для <span>вашого бізнесу</span>',
+            'hero.subtitle': 'Я — практикуючий мережевий та інфраструктурний інженер. Маючи вільний час, вирішив запропонувати свої добре прокачані навички малому та середньому бізнесу — за чесні ціни, без корпоративної надбудови.',
+            'cards.hardening.title': 'Захист серверів',
+            'cards.hardening.desc': 'Захистіть ваші сервери від типових та складних атак.',
+            'cards.hardening.li1': 'Налаштування SSH та авторизація по ключах',
+            'cards.hardening.li2': 'Конфігурація фаєрволу (nftables / UFW)',
+            'cards.hardening.li3': 'Fail2ban та запобігання вторгненням',
+            'cards.hardening.li4': 'Безпекове тюнінг ядра',
+            'cards.hardening.li5': 'Автоматичні оновлення безпеки',
+            'cards.network.title': 'Мережева інженерія',
+            'cards.network.desc': 'Проєктування, налаштування та діагностика мереж будь-якого масштабу.',
+            'cards.network.li1': 'Конфігурація MikroTik / RouterOS',
+            'cards.network.li2': 'Сегментація VLAN та маршрутизація',
+            'cards.network.li3': 'VPN (WireGuard / OpenVPN / SSTP)',
+            'cards.network.li4': 'Правила фаєрволу та NAT політики',
+            'cards.network.li5': 'Моніторинг та діагностика мережі',
+            'cards.firewall.title': 'Фаєрвол та контроль доступу',
+            'cards.firewall.desc': 'Точний контроль трафіку — пропускається лише необхідне.',
+            'cards.firewall.li1': 'Правила nftables / iptables',
+            'cards.firewall.li2': 'Зонований дизайн фаєрволу',
+            'cards.firewall.li3': 'Port knocking та обмеження швидкості',
+            'cards.firewall.li4': 'Фільтрація на рівні застосунків',
+            'cards.firewall.li5': 'Аудит та документація',
+            'cards.monitoring.title': 'Моніторинг та спостережуваність',
+            'cards.monitoring.desc': 'Повний стек спостережуваності — метрики, логи, аптайм, реальні дашборди.',
+            'cards.monitoring.li1': 'Prometheus + Grafana + Grafana Alloy',
+            'cards.monitoring.li2': 'Zabbix / Netdata реальний моніторинг',
+            'cards.monitoring.li3': 'Loki агрегація логів + Promtail',
+            'cards.monitoring.li4': 'Uptime Kuma сторінки статусу',
+            'cards.monitoring.li5': 'cAdvisor метрики контейнерів',
+            'cards.monitoring.li6': 'Сповіщення Telegram / Email / Slack',
+            'cards.containers.title': 'Контейнери та оркестрація',
+            'cards.containers.desc': 'Запуск навантажень в контейнерах — Docker, Podman або Nomad.',
+            'cards.containers.li1': 'Docker & Docker Compose',
+            'cards.containers.li2': 'Podman rootless контейнери',
+            'cards.containers.li3': 'HashiCorp Nomad шедулінг',
+            'cards.containers.li4': 'Налаштування реєстру образів',
+            'cards.containers.li5': 'Сканування безпеки образів',
+            'cards.linux.title': 'Адміністрування Linux',
+            'cards.linux.desc': 'Щоденне управління серверами та оптимізація.',
+            'cards.linux.li1': 'Розгортання та провіжнінг серверів',
+            'cards.linux.li2': 'Тюнінг продуктивності',
+            'cards.linux.li3': 'Бекапи та відновлення після збоїв',
+            'cards.linux.li4': 'Управління сервісами (systemd)',
+            'cards.linux.li5': 'Налаштування CI/CD пайплайнів',
+            'cards.automation.title': 'Автоматизація інфраструктури',
+            'cards.automation.desc': 'Повторювані, надійні деплої з сучасними інструментами.',
+            'cards.automation.li1': 'Ansible плейбуки та ролі',
+            'cards.automation.li2': 'Скрипти Bash / Python',
+            'cards.automation.li3': 'GitLab CI/CD пайплайни',
+            'cards.automation.li4': 'Nomad специфікації завдань',
+            'cards.automation.li5': 'Управління конфігурацією',
+            'about.title': 'Чому я?',
+            'about.p1': 'Я — штатний інфраструктурний інженер з України. Напрацювавши міцні навички в управлінні мережами, захисті серверів та автоматизації — тепер маю час і ресурс допомогти малому та середньому бізнесу, якому потрібні професійні рішення без корпоративних цін.',
+            'about.p2': 'Проста якісна інженерна робота, задокументована та здана.',
+            'cta.title': 'Поговоримо про вашу інфраструктуру',
+            'cta.subtitle': 'Розкажіть, що вам потрібно — я дам чесну оцінку та прозору вартість.',
+            'cta.note': 'Оберіть зручний канал. Месенджери перевіряються швидше, пошта є резервним варіантом.',
+            'cta.email': 'Пошта',
+            'adv.title': 'Сформуйте свій пакет послуг',
+            'adv.subtitle': 'Оберіть конкретні послуги — я підготую індивідуальну пропозицію.',
+            'adv.selection': 'Ваш вибір',
+            'adv.empty': 'Оберіть послуги з правої панелі, щоб сформувати свій пакет.',
+            'adv.count0': '0 послуг обрано',
+            'adv.copy': 'Копіювати запит',
+            'adv.copied': 'Скопійовано',
+            'adv.contactNote': 'Скопіюйте запит, а потім оберіть куди його надіслати.',
+            'skills.cat.hardening': 'Захист серверів',
+            'skills.cat.network': 'Мережева інженерія',
+            'skills.cat.monitoring': 'Моніторинг та спостережуваність',
+            'skills.cat.containers': 'Контейнери та оркестрація',
+            'skills.cat.automation': 'Автоматизація та DevOps',
+            'footer.copy': '© 2026 Ximer. Мережева та інфраструктурна інженерія.',
+            // Dynamic strings
+            'selected.count': ' послуг(и) обрано',
+            'selected.msg': 'Привіт! Мене цікавлять ці послуги:\n\n'
+        }
+    };
+
+    // Skill names/descriptions translations
+    const skillI18n = {
+        en: {
+            'SSH Hardening': { name: 'SSH Hardening', desc: 'Key-only auth, non-standard port, connection limits' },
+            'Firewall Setup (nftables/UFW)': { name: 'Firewall Setup (nftables / UFW)', desc: 'Inbound/outbound rules, default deny, logging' },
+            'Fail2ban & Intrusion Prevention': { name: 'Fail2ban & Intrusion Prevention', desc: 'Brute-force protection, custom jails, ban policies' },
+            'Kernel Security Tuning': { name: 'Kernel Security Tuning', desc: 'sysctl hardening, disable unused modules, ASLR' },
+            'Automated Security Updates': { name: 'Automated Security Updates', desc: 'Unattended upgrades, reboot policies, rollback' },
+            'MikroTik / RouterOS Configuration': { name: 'MikroTik / RouterOS Configuration', desc: 'Full router setup, firewall, queues, scripting' },
+            'VLAN Segmentation & Routing': { name: 'VLAN Segmentation & Routing', desc: 'Network isolation, inter-VLAN routing, trunk ports' },
+            'VPN Setup (WireGuard / OpenVPN)': { name: 'VPN Setup (WireGuard / OpenVPN)', desc: 'Site-to-site, remote access, split tunneling' },
+            'NAT & Port Forwarding': { name: 'NAT & Port Forwarding', desc: 'SNAT/DNAT, masquerade, hairpin NAT' },
+            'Network Diagnostics & Troubleshooting': { name: 'Network Diagnostics & Troubleshooting', desc: 'Packet capture, latency analysis, connectivity issues' },
+            'Prometheus + Grafana Stack': { name: 'Prometheus + Grafana Stack', desc: 'Full monitoring stack deployment and configuration' },
+            'Grafana Alloy (Collector)': { name: 'Grafana Alloy (Collector)', desc: 'Unified telemetry collector for metrics, logs, traces' },
+            'Zabbix Monitoring': { name: 'Zabbix Monitoring', desc: 'Enterprise monitoring, auto-discovery, templates' },
+            'Netdata Real-time': { name: 'Netdata Real-time', desc: 'Per-second metrics, zero-config, anomaly detection' },
+            'Uptime Kuma': { name: 'Uptime Kuma', desc: 'Status pages, HTTP/TCP/DNS monitoring, notifications' },
+            'cAdvisor Container Metrics': { name: 'cAdvisor Container Metrics', desc: 'Docker/Podman resource usage, performance data' },
+            'Custom Dashboards & Alerts': { name: 'Custom Dashboards & Alerts', desc: 'Tailored metrics, thresholds, Telegram/email/Slack alerts' },
+            'Log Aggregation (Loki)': { name: 'Log Aggregation (Loki + Promtail)', desc: 'Centralized logs, search, retention policies' },
+            'Podman Rootless Containers': { name: 'Podman Rootless Containers', desc: 'Daemonless, rootless, OCI-compliant containers' },
+            'HashiCorp Nomad': { name: 'HashiCorp Nomad', desc: 'Workload scheduling, job specs, cluster management' },
+            'Container Registry': { name: 'Container Registry', desc: 'Private registry, image management, security scanning' },
+            'Ansible Automation': { name: 'Ansible Automation', desc: 'Playbooks, roles, idempotent server configuration' },
+            'Docker / Compose Setup': { name: 'Docker / Compose Setup', desc: 'Containerization, multi-service stacks, volumes' },
+            'GitLab CI/CD Pipelines': { name: 'GitLab CI/CD Pipelines', desc: 'Build, test, deploy automation' },
+            'Bash / Python Scripting': { name: 'Bash / Python Scripting', desc: 'Custom automation scripts, cron jobs, integrations' },
+            'Backup & Disaster Recovery': { name: 'Backup & Disaster Recovery', desc: 'Automated backups, integrity checks, recovery plans' }
+        },
+        ua: {
+            'SSH Hardening': { name: 'Захист SSH', desc: 'Авторизація по ключах, нестандартний порт, ліміти з\'єднань' },
+            'Firewall Setup (nftables/UFW)': { name: 'Налаштування фаєрволу (nftables / UFW)', desc: 'Правила вхідного/вихідного трафіку, заборона за замовчуванням' },
+            'Fail2ban & Intrusion Prevention': { name: 'Fail2ban та запобігання вторгненням', desc: 'Захист від брутфорсу, кастомні правила, політики бану' },
+            'Kernel Security Tuning': { name: 'Безпековий тюнінг ядра', desc: 'sysctl хардерінг, вимкнення зайвих модулів, ASLR' },
+            'Automated Security Updates': { name: 'Автоматичні оновлення безпеки', desc: 'Автоматичні апгрейди, політики перезавантаження' },
+            'MikroTik / RouterOS Configuration': { name: 'Конфігурація MikroTik / RouterOS', desc: 'Повне налаштування роутера, фаєрвол, черги, скрипти' },
+            'VLAN Segmentation & Routing': { name: 'Сегментація VLAN та маршрутизація', desc: 'Ізоляція мережі, inter-VLAN routing, trunk порти' },
+            'VPN Setup (WireGuard / OpenVPN)': { name: 'VPN (WireGuard / OpenVPN)', desc: 'Site-to-site, віддалений доступ, split tunneling' },
+            'NAT & Port Forwarding': { name: 'NAT та проброс портів', desc: 'SNAT/DNAT, masquerade, hairpin NAT' },
+            'Network Diagnostics & Troubleshooting': { name: 'Діагностика та вирішення проблем мережі', desc: 'Захоплення пакетів, аналіз затримок, проблеми з\'єднання' },
+            'Prometheus + Grafana Stack': { name: 'Стек Prometheus + Grafana', desc: 'Розгортання та налаштування моніторингу' },
+            'Custom Dashboards & Alerts': { name: 'Кастомні дашборди та алерти', desc: 'Метрики, пороги, сповіщення Telegram/email' },
+            'Log Aggregation (Loki)': { name: 'Агрегація логів (Loki)', desc: 'Централізовані логи, пошук, політики ретеншну' },
+            'Ansible Automation': { name: 'Автоматизація Ansible', desc: 'Плейбуки, ролі, ідемпотентна конфігурація серверів' },
+            'Docker / Compose Setup': { name: 'Docker / Compose', desc: 'Контейнеризація, мультисервісні стеки, волюми' },
+            'Grafana Alloy (Collector)': { name: 'Grafana Alloy (колектор)', desc: 'Уніфікований колектор метрик, логів, трейсів' },
+            'Zabbix Monitoring': { name: 'Zabbix моніторинг', desc: 'Корпоративний моніторинг, автовідкриття, шаблони' },
+            'Netdata Real-time': { name: 'Netdata реальний час', desc: 'Метрики щосекунди, zero-config, виявлення аномалій' },
+            'Uptime Kuma': { name: 'Uptime Kuma', desc: 'Сторінки статусу, HTTP/TCP/DNS моніторинг' },
+            'cAdvisor Container Metrics': { name: 'cAdvisor метрики контейнерів', desc: 'Використання ресурсів Docker/Podman' },
+            'Custom Dashboards & Alerts': { name: 'Кастомні дашборди та алерти', desc: 'Метрики, пороги, сповіщення Telegram/email/Slack' },
+            'Log Aggregation (Loki)': { name: 'Агрегація логів (Loki + Promtail)', desc: 'Централізовані логи, пошук, політики ретеншну' },
+            'Podman Rootless Containers': { name: 'Podman rootless контейнери', desc: 'Без демона, без root, OCI-сумісні' },
+            'HashiCorp Nomad': { name: 'HashiCorp Nomad', desc: 'Шедулінг, специфікації завдань, кластерне управління' },
+            'Container Registry': { name: 'Реєстр образів', desc: 'Приватний реєстр, управління, сканування безпеки' },
+            'GitLab CI/CD Pipelines': { name: 'GitLab CI/CD пайплайни', desc: 'Автоматизація збірки, тестів, деплою' },
+            'Bash / Python Scripting': { name: 'Скрипти Bash / Python', desc: 'Кастомні скрипти автоматизації, cron, інтеграції' },
+            'Backup & Disaster Recovery': { name: 'Бекапи та відновлення', desc: 'Автоматичні бекапи, перевірка цілісності, плани відновлення' }
+        }
+    };
+
+    // ===== LANGUAGE SWITCHING =====
+    function switchLang(lang) {
+        currentLang = lang;
+        const btns = document.querySelectorAll('.lang-toggle a');
+        btns.forEach(b => b.classList.remove('active'));
+        btns[lang === 'en' ? 0 : 1].classList.add('active');
+
+        // Update text content
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (i18n[lang][key]) el.textContent = i18n[lang][key];
+        });
+
+        // Update innerHTML (for elements with <span>, <br>)
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+            const key = el.getAttribute('data-i18n-html');
+            if (i18n[lang][key]) el.innerHTML = i18n[lang][key];
+        });
+
+        // Update skill items
+        document.querySelectorAll('.skill-item').forEach(item => {
+            const cb = item.querySelector('input[type="checkbox"]');
+            const key = cb.value;
+            if (skillI18n[lang][key]) {
+                item.querySelector('.name').textContent = skillI18n[lang][key].name;
+                item.querySelector('.desc').textContent = skillI18n[lang][key].desc;
+            }
+        });
+
+        // Update document lang attribute
+        document.documentElement.lang = lang === 'ua' ? 'uk' : 'en';
+
+        // Re-render selection panel
+        updateSelection();
+    }
+
+    function configureContactLinks() {
+        document.querySelectorAll('[data-contact]').forEach(link => {
+            const type = link.getAttribute('data-contact');
+            const value = CONTACTS[type];
+
+            if (!value) {
+                link.removeAttribute('href');
+                link.classList.add('is-disabled');
+                link.setAttribute('aria-disabled', 'true');
+                link.setAttribute('title', 'Contact will be added before publishing');
+                return;
+            }
+
+            link.classList.remove('is-disabled');
+            link.removeAttribute('aria-disabled');
+            link.removeAttribute('title');
+            link.href = type === 'email' ? 'mailto:' + value : value;
+        });
+    }
+
+    async function copyText(text) {
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+            return;
+        }
+
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        textarea.remove();
+    }
+
+    // ===== MODE SWITCHING =====
+    function switchMode(mode) {
+        const btns = document.querySelectorAll('.mode-toggle button');
+        btns.forEach(b => b.classList.remove('active'));
+
+        if (mode === 'standard') {
+            document.getElementById('viewStandard').style.display = 'block';
+            document.getElementById('viewAdvanced').style.display = 'none';
+            btns[0].classList.add('active');
+        } else {
+            document.getElementById('viewStandard').style.display = 'none';
+            document.getElementById('viewAdvanced').style.display = 'block';
+            btns[1].classList.add('active');
+        }
+    }
+
+    // ===== SKILL SELECTION (Advanced mode) =====
+    function toggleSkill(el) {
+        const cb = el.querySelector('input[type="checkbox"]');
+        cb.checked = !cb.checked;
+        el.classList.toggle('checked', cb.checked);
+        updateSelection();
+    }
+
+    function removeSkill(value) {
+        const items = document.querySelectorAll('.skill-item');
+        items.forEach(item => {
+            const cb = item.querySelector('input[type="checkbox"]');
+            if (cb.value === value) {
+                cb.checked = false;
+                item.classList.remove('checked');
+            }
+        });
+        updateSelection();
+    }
+
+    function updateSelection() {
+        const checked = document.querySelectorAll('.skill-item input:checked');
+        const listEl = document.getElementById('selectedList');
+        const countEl = document.getElementById('selectedCount');
+        const t = i18n[currentLang];
+
+        if (checked.length === 0) {
+            listEl.innerHTML = '<div class="empty-state">' + t['adv.empty'] + '</div>';
+            countEl.textContent = t['adv.count0'];
+            updateSelectionLinks('');
+            return;
+        }
+
+        const names = [];
+        const displayNames = [];
+        let html = '';
+        checked.forEach(cb => {
+            const key = cb.value;
+            names.push(key);
+            const displayName = skillI18n[currentLang][key] ? skillI18n[currentLang][key].name : key;
+            displayNames.push(displayName);
+            html += '<div class="selected-item"><span>' + displayName + '</span><button onclick="event.stopPropagation(); removeSkill(\'' + key.replace(/'/g, "\\'") + '\')" title="Remove"><i class="bi bi-x-lg"></i></button></div>';
+        });
+
+        listEl.innerHTML = html;
+        countEl.textContent = checked.length + t['selected.count'];
+        updateSelectionLinks(t['selected.msg'] + displayNames.map(n => '• ' + n).join('\n'));
+    }
+
+    function getSelectionMessage() {
+        const checked = document.querySelectorAll('.skill-item input:checked');
+        const names = Array.from(checked).map(cb => {
+            const key = cb.value;
+            return skillI18n[currentLang][key] ? skillI18n[currentLang][key].name : key;
+        });
+        return i18n[currentLang]['selected.msg'] + names.map(name => '• ' + name).join('\n');
+    }
+
+    function updateSelectionLinks(message) {
+        const telegramLink = document.querySelector('[data-selection-link="telegram"]');
+        const emailLink = document.querySelector('[data-selection-link="email"]');
+
+        if (CONTACTS.telegram) {
+            telegramLink.href = CONTACTS.telegram + (message ? '?text=' + encodeURIComponent(message) : '');
+        }
+
+        if (CONTACTS.email) {
+            const subject = currentLang === 'ua' ? 'Запит на інфраструктурні послуги' : 'Infrastructure service request';
+            emailLink.href = 'mailto:' + CONTACTS.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(message);
+        }
+    }
+
+    async function copySelection() {
+        const button = document.getElementById('copySelectionBtn');
+        const message = getSelectionMessage();
+
+        await copyText(message);
+
+        button.textContent = i18n[currentLang]['adv.copied'];
+        setTimeout(() => { button.textContent = i18n[currentLang]['adv.copy']; }, 1600);
+    }
+
+    configureContactLinks();
+</script>
+
+</body>
+</html>

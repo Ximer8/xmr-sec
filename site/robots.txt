@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://xmr-sec.example.com/sitemap.xml
